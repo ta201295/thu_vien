@@ -2,17 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
-class Student extends Model
+class Student extends Authenticatable
 {
-    protected $fillable = array('first_name','last_name','approved','category','roll_num','branch','year','email_id');
+    protected $fillable = [
+		'first_name',
+		'last_name',
+		'email',
+		'password',
+		'status'
+	];
 
-    public $timestamps = false;
-
-	protected $table = 'students';
-	protected $primaryKey = 'student_id';
-
-	protected $hidden = array();
-
+	public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
 }

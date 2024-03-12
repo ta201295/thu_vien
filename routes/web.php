@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -128,9 +130,6 @@ Route::group(['middleware' => ['auth']] , function() {
         'as' => 'settings.store',
         'uses' => 'StudentController@StoreSetting'
     ));
-
-    // Main students Controlller resource
-	Route::resource('/student', 'StudentController');
 	
 	Route::post('/studentByattribute', array(
         'as' => 'studentByattribute',
@@ -159,3 +158,14 @@ Route::group(['middleware' => ['auth']] , function() {
     ));
 
 });
+
+Route::resource('students', 'StudentController')->only(['create', 'store']);
+Route::prefix('students')->group(function () {
+	Route::get('/login', 'StudentController@showLoginForm')->name('students.show_login');
+	Route::post('/login', 'StudentController@login')->name('students.post_login');
+});
+
+
+// Route::group(['middleware' => ['auth:student']], function () {
+
+// });

@@ -2,7 +2,7 @@
 	.wrapper{
 		background-image: url({{  asset("images/library.jpg")}});
 		background-color: #cccccc;
-		height: 500px;
+		min-height: 500px;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;

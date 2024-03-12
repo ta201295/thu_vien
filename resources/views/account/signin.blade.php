@@ -47,7 +47,7 @@
 					<h3>Student Section</h3>
 				</div>
 				<div class="module-body">
-                    <p><a href="{{ URL::route('student-registration') }}"><strong>Mẫu đăng ký sinh viên</strong></a></p>
+                    <p><a href="{{ route('students.create') }}"><strong>Mẫu đăng ký sinh viên</strong></a></p>
                     <p><a href="{{ URL::route('search-book') }}"><strong>Tìm kiếm sách</strong></a></p>
 				</div>
 			</div>

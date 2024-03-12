@@ -14,17 +14,12 @@ class CreateStudentsTable extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->bigIncrements('student_id');
-            $table->string('first_name', 512);
-            $table->string('last_name', 512);
-            $table->tinyInteger('approved')->default(0);
-            $table->tinyInteger('rejected')->default(0);
-            $table->integer('category')->unsigned();
-            $table->string('roll_num', 15);
-            $table->tinyInteger('branch')->default(0);
-            $table->integer('year')->unsigned();
-            $table->tinyInteger('books_issued')->default(0);
-            $table->string('email_id', 512);
+            $table->bigIncrements('id');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->tinyInteger('status')->default(1)->comment('1:active, 2: inactive');
             $table->timestamps();
         });
     }

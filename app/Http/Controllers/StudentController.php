@@ -11,16 +11,13 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\StudentCategories;
 use App\Http\Controllers\HomeController;
+use App\Http\Requests\Student\StoreRequest;
 use App\Models\BookCategories;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class StudentController extends Controller
 {
-    public function __construct(){
-
-		$this->filter_params = array('branch','year','category');
-
-	}
 
 	public function index()
 	{
@@ -95,21 +92,7 @@ class StudentController extends Controller
 
 	public function create()
 	{
-		$conditions = array(
-			'approved'	=> 1,
-			'rejected'	=> 0
-		);
-
-		$students = Student::join('branches', 'branches.id', '=', 'students.branch')
-		->join('book_categories', 'book_categories.id', '=', 'students.category')
-		->select('student_id', 'first_name', 'last_name', 'book_categories.category', 'roll_num', 'branches.branch', 'year', 'email_id', 'books_issued')
-			->where($conditions)
-			->orderBy('student_id');
-
-		// $this->filterQuery($students);
-		$students = $students->get();
-
-        return $students;
+		return view('students.create');
 	}
 
 
@@ -118,9 +101,17 @@ class StudentController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(StoreRequest $request)
 	{
-		//
+		$student = Student::create($request->validated());
+
+		if ($student) {
+			Auth::guard('student')->login($student);
+
+			return redirect()->route('search-book');
+		}
+
+		return redirect()->back()->with(['system_error' => 'Lỗi hệ thống, vui lòng thử lại sau!']);
 	}
 
 

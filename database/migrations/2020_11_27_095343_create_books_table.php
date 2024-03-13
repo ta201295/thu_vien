@@ -20,7 +20,8 @@ class CreateBooksTable extends Migration
             $table->text('description');
             $table->integer('category_id')->unsigned();
             $table->integer('added_by')->unsigned();
-
+            $table->unsignedSmallInteger('total');
+            $table->unsignedSmallInteger('total_active');
             $table->timestamps();
         });
     }

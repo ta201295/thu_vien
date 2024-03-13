@@ -12,7 +12,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="#" target="_blank">Sách đã mượn</a></li>
                             <li class="divider"></li>
-                            <li><a href="#" target="_blank">Đăng ký mượn sách</a></li>
+                            <li><a href="{{ route('book-student.create') }}">Đăng ký mượn sách</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ route('students.logout') }}">Đăng xuất</a></li>
                         </ul>

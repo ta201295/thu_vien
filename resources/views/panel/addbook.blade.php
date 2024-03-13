@@ -48,7 +48,7 @@
                 <div class="control-group">
                     <label class="control-label">Số lượng</label>
                     <div class="controls">
-                        <input type="number" id="number" data-form-field="number" placeholder="Số lượng?" class="span8">
+                        <input type="total" id="total" data-form-field="total" placeholder="Số lượng?" class="span8">
                     </div>
                 </div>
                 <div class="control-group">

@@ -76,11 +76,11 @@ $(document).on("click","#addbooks",function(){
         author = f$('input[data-form-field~=author]').val();
         description = f$('textarea[data-form-field~=description]').val();
         category_id = f$('select[data-form-field~=category]').val();
-        number = parseInt(f$('input[data-form-field~=number]').val());
+        total = parseInt(f$('input[data-form-field~=total]').val());
         auth_user = f$('input[data-form-field~=auth_user]').val();
         _token = f$('input[data-form-field~=token]').val();
 
-        if(title == "" || author == "" || description == "" || number == null){
+        if(title == "" || author == "" || description == "" || total == null){
             module_body.prepend(templates.alert_box( {type: 'danger', message: 'Book Details Not Complete'} ));
             send_flag = false;
         }
@@ -91,7 +91,7 @@ $(document).on("click","#addbooks",function(){
                 type : 'POST',
                 data : {
                    title:title, author:author, description:description,
-                    number:number, category_id : category_id, _token:_token,
+                    total:total, category_id : category_id, _token:_token,
                     auth_user:auth_user
                 },
                 url : '/books',

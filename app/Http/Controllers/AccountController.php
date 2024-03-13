@@ -32,12 +32,15 @@ class AccountController extends Controller
 			'password' => $request->get('password')
 		));
 		if($auth) {
-			return Redirect::intended('home');
+			return Redirect::route('home');
 
 		} else {
 			
 			return Redirect::route('account-sign-in')
-				->with('global', 'Wrong Email or Wrong Password.');
+				->with([
+					'alert' => 'alert-error',
+					'global' => 'Wrong Email or Wrong Password.'
+				]);
 		}
 
 		return Redirect::route('account-sign-in')

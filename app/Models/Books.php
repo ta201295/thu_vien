@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Books extends Model
 {
-    protected $fillable = array('book_id', 'title', 'author', 'category_id', 'description', 'added_by');
+    protected $fillable = [
+        'title',
+        'author',
+        'category_id',
+        'description',
+        'added_by',
+        'total',
+        'total_active'
+    ];
 
     public $timestamps = false;
 
@@ -15,6 +23,11 @@ class Books extends Model
 
 	protected $hidden = array();
 
+
+    public function bookCategory()
+    {
+        return $this->hasOne(BookCategories::class, 'id', 'category_id');
+    }
 
     public function issues()
     {

@@ -14,6 +14,7 @@ use App\Models\StudentCategories;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
+use App\Http\Requests\Book\StoreRequest;
 use Exception;
 
 class BooksController extends Controller
@@ -31,33 +32,7 @@ class BooksController extends Controller
 	 */
 	public function index()
 	{
-
-		$book_list = Books::select('book_id','title','author','description','book_categories.category')
-		->join('book_categories', 'book_categories.id', '=', 'books.category_id')
-			->orderBy('book_id')->get();
-		// dd($book_list);
-		// $this->filterQuery($book_list);
-
-		// $book_list = $book_list->get();
-
-		for($i=0; $i<count($book_list); $i++){
-
-	        $id = $book_list[$i]['book_id'];
-	        $conditions = array(
-	        	'book_id'			=> $id,
-	        	'available_status'	=> 1
-        	);
-
-	        $book_list[$i]['total_books'] = Issue::select()
-	        	->where('book_id','=',$id)
-	        	->count();
-
-	        $book_list[$i]['avaliable'] = Issue::select()
-	        	->where($conditions)
-	        	->count();
-		}
-
-        return $book_list;
+        return Books::with('bookCategory')->get();
 	}
 
 
@@ -77,49 +52,14 @@ class BooksController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function store(Request $request)
+	public function store(StoreRequest $request)
 	{
-		$books = $request->all();
-		
-		// DB::transaction( function() use($books) {
-			// dd($books);
-			$db_flag = false;
-			$user_id = Auth::id();
-			$book_title = Books::create([
-				'title'			=> $books['title'],
-				'author'		=> $books['author'],
-				'description' 	=> $books['description'],
-				'category_id'	=> $books['category_id'],
-				'added_by'		=> $user_id
-			]);
-			// dd($book_title);
-			$newId = $book_title->book_id;
-			// dd($newId);
-			if(!$book_title){
-				$db_flag = true;
-			} else {
-				$number_of_issues = $books['number'];
-
-				for($i=0; $i<$number_of_issues; $i++){
-
-					$issues = Issue::create([
-						'book_id'	=> $newId,
-						'added_by'	=> $user_id
-					]);
-
-					if(!$issues){
-						$db_flag = true;
-					}
-				}
-			}
-
-			if($db_flag)
-				return'Invalid update data provided';
-
-		// });
+		$data = $request->validated();
+		$data['added_by'] = Auth::id();
+		$data['total_active'] = $data['total'];
+		Books::create($data);
 
 		return "Books Added successfully to Database";
-
 	}
 
 

@@ -19,7 +19,7 @@ class CreateStudentsTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->tinyInteger('status')->default(1)->comment('1:active, 2: inactive');
+            $table->tinyInteger('status')->default(1)->comment('1:active, 2:inactive');
             $table->timestamps();
         });
     }

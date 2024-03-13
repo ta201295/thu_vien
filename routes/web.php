@@ -54,12 +54,6 @@ Route::group(array('before' => 'guest'), function() {
 		'as' 	=> 'account-create',
 		'uses' 	=> 'AccountController@getCreate'
 	));
-
-	// Student Registeration form 
-	Route::get('/student-registration', array(
-		'as' 	=> 'student-registration',
-		'uses' 	=> 'StudentController@getRegistration'
-	));
     
     // Render search books panel
     Route::get('/book', array(
@@ -166,5 +160,9 @@ Route::prefix('students')->group(function () {
 
 
 Route::group(['middleware' => ['auth:student']], function () {
-	Route::get('/logout', 'StudentController@logout')->name('students.logout');
+	Route::prefix('students')->group(function () {
+		Route::get('/logout', 'StudentController@logout')->name('students.logout');
+	});
+
+	Route::resource('book-student', 'BookStudentController');
 });

@@ -259,13 +259,6 @@ class StudentController extends Controller
 			->with('book_categories', BookCategories::all());
 	}
 
-	public function getRegistration(){
-		$db_control = new HomeController;
-		return view('public.registration')
-			->with('branch_list', $db_control->branch_list)
-			->with('book_categories', BookCategories::all());
-	}
-
 	public function postRegistration(Request $request){
 
 		$validator = $request->validate([

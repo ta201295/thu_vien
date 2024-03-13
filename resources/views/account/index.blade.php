@@ -60,7 +60,7 @@
     @endif
 
     @if(Session::has('global'))
-        <div class="alert alert-error">
+        <div class="alert  @if(Session::has('alert')) {{ Session::get('alert') }} @else alert-success" @endif>
             <button type="button" class="close" data-dismiss="alert">×</button>
             {{ Session::get('global') }}
         </div>

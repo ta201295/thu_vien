@@ -59,7 +59,7 @@
 								<button type="submit" class="btn btn-info pull-right">Tạo tài khoản</button>
 							</div>
 						</div>
-						<a href="{{ route('students.show_login') }}">Bạn đã có tài khoản?</a>
+						<a href="{{ route('main') }}">Bạn đã có tài khoản?</a>
 					</div>
 					@if(session()->has('system_error'))
 						<div class="alert alert-error">

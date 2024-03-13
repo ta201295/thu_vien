@@ -11,6 +11,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\StudentCategories;
 use App\Http\Controllers\HomeController;
+use App\Http\Requests\Student\LoginRequest;
 use App\Http\Requests\Student\StoreRequest;
 use App\Models\BookCategories;
 use Illuminate\Support\Facades\Auth;
@@ -337,5 +338,23 @@ class StudentController extends Controller
 		}
 
 		
+	}
+
+	public function login(LoginRequest $request)
+	{
+		if (Auth::guard('student')->attempt($request->validated())) {
+			return redirect()->route('search-book');
+        }
+
+		return redirect()->back()
+			->withErrors(['password' => 'Mật khẩu không chính xác'])
+			->withInput($request->except('password'));
+	}
+
+	public function logout()
+	{
+		Auth::guard('student')->logout();
+
+		return redirect()->route('main');
 	}
 }

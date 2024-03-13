@@ -15,6 +15,11 @@ class Student extends Authenticatable
 		'status'
 	];
 
+	public function getFullNameAttribute()
+    {
+        return "{$this->last_name} {$this->first_name}";;
+    }
+
 	public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);

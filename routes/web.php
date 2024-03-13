@@ -14,8 +14,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('main');
 
 // Unauthenticated group 
 Route::group(array('before' => 'guest'), function() {
@@ -44,7 +44,7 @@ Route::group(array('before' => 'guest'), function() {
 	});
 
 	// Sign in (GET) 
-	Route::get('/', array(
+	Route::get('/login', array(
 		'as' 	=> 'account-sign-in',
 		'uses'	=> 'AccountController@getSignIn'
 	));
@@ -161,11 +161,10 @@ Route::group(['middleware' => ['auth']] , function() {
 
 Route::resource('students', 'StudentController')->only(['create', 'store']);
 Route::prefix('students')->group(function () {
-	Route::get('/login', 'StudentController@showLoginForm')->name('students.show_login');
 	Route::post('/login', 'StudentController@login')->name('students.post_login');
 });
 
 
-// Route::group(['middleware' => ['auth:student']], function () {
-
-// });
+Route::group(['middleware' => ['auth:student']], function () {
+	Route::get('/logout', 'StudentController@logout')->name('students.logout');
+});

@@ -19,4 +19,9 @@
 		position: relative;
 	}
 
+	.admin-login {
+		display: flex;
+		justify-content: center
+	}
+
 </style>

@@ -4,19 +4,19 @@
 
 <div class="wrapper">
 	<div class="container">
-		<div class="row admin-login">
+		<div class="row">
 			<div class="module module-login span4 offset1">
-				<form class="form-vertical" action="{{ URL::route('account-sign-in-post') }}" method="POST">
+				<form class="form-vertical" action="{{ route('students.post_login') }}" method="POST">
 					@csrf
 					<div class="module-head">
-						<h3>Đăng nhập Thủ thư / Quản trị viên</h3>
+						<h3>Đăng nhập</h3>
 					</div>
 					<div class="module-body">
 						<div class="control-group">
 							<div class="controls row-fluid">
-								<input class="span12" type="text" name="username" placeholder="Tài khoản" value="{{ Request::old('login') }}" autofocus>
-								@if($errors->has('user_login'))
-									{{ $errors->first('login')}}
+								<input class="span12" type="text" name="email" placeholder="Email" value="{{ Request::old('email') }}" autofocus>
+								@if($errors->has('email'))
+									{{ $errors->first('email')}}
 								@endif
 							</div>
 						</div>
@@ -38,9 +38,17 @@
 								</label>
 							</div>
 						</div>
-						<a href="{{ URL::route('account-create') }}">Thủ thư mới? Đăng ký</a>
+						<a href="{{ route('students.create') }}">Đăng ký tài khoản</a>
 					</div>
 				</form>
+			</div>
+			<div class="module module-login span4 offset2">
+				<div class="module-head">
+					<h3>Student Section</h3>
+				</div>
+				<div class="module-body">
+                    <p><a href="{{ URL::route('search-book') }}"><strong>Tìm kiếm sách</strong></a></p>
+				</div>
 			</div>
         </div>
 	</div>

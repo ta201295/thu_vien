@@ -53,9 +53,18 @@
         }
     </style>
 
+    @if (auth('student')->check())
+        @include('students.right_nav')
+    @else
+        @include('account.navigation_top')
+    @endif
 
-    @include('account.navigation_top')
-    @include('account.message')
+    @if(Session::has('global'))
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ Session::get('global') }}
+        </div>
+    @endif
     @yield('content')
     @include('account.navigation_bottom')
 

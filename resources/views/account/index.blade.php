@@ -54,7 +54,7 @@
     </style>
 
     @if (auth('student')->check())
-        @include('students.right_nav')
+        @include('students.right-nav')
     @else
         @include('account.navigation_top')
     @endif

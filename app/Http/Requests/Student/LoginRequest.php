@@ -18,7 +18,7 @@ class LoginRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
+     *5
      * @return array
      */
     public function rules()

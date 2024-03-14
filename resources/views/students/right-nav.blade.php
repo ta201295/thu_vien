@@ -7,7 +7,7 @@
             <div class="nav-collapse collapse navbar-inverse-collapse">
                 <ul class="nav pull-right">
                     <li class="nav-user dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('images/passport-size.png') }}" class="nav-avatar" />{{ auth('student')->user()->full_name }}
+                        <img src="{{ asset('images/avatar_default.jpeg') }}" class="nav-avatar" />{{ auth('student')->user()->full_name }}
                         <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#" target="_blank">Sách đã mượn</a></li>

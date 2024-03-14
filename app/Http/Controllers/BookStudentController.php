@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BookStudent\StoreRequest;
 use App\Models\Books;
+use App\Models\BookStudent;
 use Illuminate\Http\Request;
 
 class BookStudentController extends Controller
@@ -26,8 +28,8 @@ class BookStudentController extends Controller
     {
         $bookActive = Books::where('total_active', '>', 0)->get();
 
-        return view('public.registration', [
-            'book' => $bookActive
+        return view('students.registration', [
+            'books' => $bookActive
         ]);
     }
 
@@ -37,9 +39,13 @@ class BookStudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['student_id'] = auth('student')->user()->id;
+        BookStudent::create($data);
+
+        return back();
     }
 
     /**

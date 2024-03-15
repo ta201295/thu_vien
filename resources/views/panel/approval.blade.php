@@ -11,34 +11,12 @@
         </div>
         <div class="module-body">
             <div class="controls">
-                <select class="span3" id="branch_select">
-                    <option value="0">Tất cả chi nhánh</option>
-                    @foreach($branch_list as $branch)
-                        <option value="{{ $branch->id }}">{{ $branch->branch }}</option>
-                    @endforeach
-                </select>
                 <select class="span3" id="category_select">
                     <option value="0">Tất cả danh mục</option>
                     @foreach($book_categories as $book_category)
                         <option value="{{ $book_category->id }}">{{ $book_category->category }}</option>
                     @endforeach
                 </select>
-                <select class="span2" id="year_select">
-                    <option value="0">Các năm </option>
-                    <option>2020</option>
-                    <option>2021</option>
-                    <option>2022</option>
-                    <option>2023</option>
-                    <option>2024</option>
-                    <option>2025</option>
-                    <option>2026</option>
-                    <option>2027</option>
-                    <option>2028</option>
-                    <option>2029</option>
-                    <option>2030</option>
-                </select>
-                    <button style="margin-bottom:10px" id="refresh" class="btn btn-warning">Nhập lại </button>
-
 
             </div>
             <table class="table table-striped table-bordered table-condensed">
@@ -47,8 +25,8 @@
                         <th>ID</th>
                         <th>Họ</th>
                         <th>Tên</th>
-                        <th>Roll Number</th>
-                        <th>Chi nhánh</th>
+                        <th>Số lượng</th>
+                        <th>Tên sách</th>
                         <th>Danh mục</th>
                         <th>Chấp thuận</th>
                     </tr>

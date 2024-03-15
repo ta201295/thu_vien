@@ -151,6 +151,8 @@ Route::group(['middleware' => ['auth']] , function() {
 		'uses' => 'AccountController@getSignOut'
     ));
 
+	Route::get('/book-student/pending', 'BookStudentController@listPending')->name('book-student.pending');
+	Route::resource('book-student', 'BookStudentController')->only('update');
 });
 
 Route::resource('students', 'StudentController')->only(['create', 'store']);
@@ -164,5 +166,5 @@ Route::group(['middleware' => ['auth:student']], function () {
 		Route::get('/logout', 'StudentController@logout')->name('students.logout');
 	});
 
-	Route::resource('book-student', 'BookStudentController');
+	Route::resource('book-student', 'BookStudentController')->except('update');
 });

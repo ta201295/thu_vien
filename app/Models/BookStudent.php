@@ -10,6 +10,7 @@ class BookStudent extends Model
 
     protected $fillable = [
 		'book_id',
+		'category_id',
 		'student_id',
 		'number',
 		'status',
@@ -41,5 +42,10 @@ class BookStudent extends Model
 	public function book()
     {
         return $this->hasOne(Books::class, 'book_id', 'book_id');
+    }
+
+	public function student()
+    {
+        return $this->hasOne(Student::class, 'id', 'student_id');
     }
 }

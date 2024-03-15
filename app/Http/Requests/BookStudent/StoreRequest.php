@@ -24,7 +24,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'book_id' => 'required|integer|exists:books',
+            'book_id' => 'required|integer',
             'number' => 'required|integer|between:1,5'
         ];
     }
@@ -33,7 +33,6 @@ class StoreRequest extends FormRequest
     {
         return [
             'book.required' => 'Vui lòng chọn sách',
-            'book.exists' => 'Sách không tồn tại',
             'number.required' => 'Vui lòng chọn số lượng sách',
             'password.between' => 'Chỉ được mượn 1 đên 5 cuốn sách mỗi lần'
         ];

@@ -16,6 +16,7 @@ class CreateBookStudentTable extends Migration
         Schema::create('book_student', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('book_id');
+            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('student_id');
             $table->unsignedInteger('number')->comment('number of borrowed books');
             $table->tinyInteger('status')->default(0)->comment('0:pending, 1:approved, 2:rejected, 3:borrowed, 4:completed');

@@ -16,7 +16,14 @@ class BookStudentController extends Controller
      */
     public function index()
     {
-        //
+        $bookStudents = BookStudent::where('student_id', auth('student')->user()->id)
+            ->orderByDesc('id')
+            ->with('book')
+            ->paginate();
+
+        return view('students.borrowed-list', [
+            'bookStudents' => $bookStudents
+        ]);
     }
 
     /**
@@ -45,7 +52,7 @@ class BookStudentController extends Controller
         $data['student_id'] = auth('student')->user()->id;
         BookStudent::create($data);
 
-        return back();
+        return redirect()->route('book-student.index');
     }
 
     /**

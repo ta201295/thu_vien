@@ -10,7 +10,7 @@
                         <img src="{{ asset('images/avatar_default.jpeg') }}" class="nav-avatar" />{{ auth('student')->user()->full_name }}
                         <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" target="_blank">Sách đã mượn</a></li>
+                            <li><a href="{{ route('book-student.index') }}">Sách đã mượn</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ route('book-student.create') }}">Đăng ký mượn sách</a></li>
                             <li class="divider"></li>

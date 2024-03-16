@@ -38,11 +38,12 @@
             <h3>Trả lại sách đã phát hành</h3>
         </div>
         <div class="module-body">
-            <form class="form-horizontal row-fluid">
+            <form class="form-horizontal row-fluid" action="{{ route('issue-log.return') }}" method="POST">
+                @csrf
                 <div class="control-group">
                     <label class="control-label" for="basicinput">Chọn sách đã phát hành</label>
                     <div class="controls">
-                        <select tabindex="1" id="book_student" class="span8">
+                        <select tabindex="1" name="book_student_id" class="span8">
                             <option value="">Chọn sách</option>
                             @foreach($borrowedBooks as $borrowedBook)
                                 <option value="{{ $borrowedBook->id }}">{{ $borrowedBook->book->title }} - {{ $borrowedBook->student->full_name }}</option>
@@ -53,13 +54,12 @@
 
                 <div class="control-group">
                     <div class="controls">
-                        <button type="button" class="btn btn-inverse" id="returnbook">Trả sách</button>
+                        <button type="submit" class="btn btn-inverse">Trả sách</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <input type="hidden" id="_token"  data-form-field="token"  value="{{ csrf_token() }}">
 </div>
 @stop
 

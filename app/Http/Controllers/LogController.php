@@ -168,4 +168,27 @@ class LogController extends Controller
 			'borrowedBooks' => $borrowedBooks
         ]);
     }
+
+	public function return(Request $request)
+	{
+		DB::beginTransaction();
+        try {
+			$bookStudentId = $request->book_student_id;
+			$bookStudent = BookStudent::find($bookStudentId);
+            $bookStudent->update(['status' => BookStudent::STATUS_COMPLETED]);
+
+            Logs::where('book_student_id', $bookStudent->id)->update(['return_time' => now()]);
+            DB::commit();
+
+			return redirect()->route('issue-return')->with(['global' => 'Trả sách thành công']);
+        } catch (Exception $e) {
+            Log::error("LogController@store:bookStudentId-$bookStudentId " . $e->getMessage());
+            DB::rollBack();
+
+			return redirect()->route('issue-return')->with([
+				'alert' => 'alert-error',
+				'global' => 'Đã có lỗi xảy ra, vui lòng thử lại sau!'
+			]);
+        }
+	}
 }

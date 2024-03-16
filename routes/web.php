@@ -144,6 +144,7 @@ Route::group(['middleware' => ['auth']] , function() {
 
     // Main Logs Controlller resource
     Route::resource('/issue-log', 'LogController');
+	Route::post('/issue-log/return', 'LogController@return')->name('issue-log.return');
 
 	// Sign out (GET) 
     Route::get('/sign-out', array(

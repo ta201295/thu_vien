@@ -17,7 +17,7 @@ class CreateBookIssueLogsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('book_student_id')->unsigned();
             $table->integer('issue_by')->unsigned();
-            $table->date('return_time', 50)->nullable();
+            $table->timestamp('return_time')->nullable();
             $table->timestamps();
         });
     }

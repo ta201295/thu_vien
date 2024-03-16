@@ -15,11 +15,9 @@ class CreateBookIssueLogsTable extends Migration
     {
         Schema::create('book_issue_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('book_issue_id')->unsigned();
-            $table->integer('student_id')->unsigned();
+            $table->integer('book_student_id')->unsigned();
             $table->integer('issue_by')->unsigned();
-            $table->string('issued_at', 50);
-            $table->string('return_time', 50);
+            $table->date('return_time', 50)->nullable();
             $table->timestamps();
         });
     }

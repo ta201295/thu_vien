@@ -126,7 +126,7 @@ class BookStudentController extends Controller
             DB::rollBack();
 
             return 'Đã có lỗi xảy ra, vui lòng thử lại sau!';
-        }        
+        }      
     }
 
     /**

@@ -29,42 +29,6 @@ function loadResults(){
     });
 }
 
-function issueBook(bookID, studentID, selectedForm){
-    var url = '/issue-log',
-        data = {};
-
-    data.bookID = bookID;
-    data.studentID = studentID;
-    var _token = $('#_token').val();
-    // alert(_token);
-    $.ajax({
-        type : 'POST',
-        data : { 
-            data : data,
-            _token:_token
-        },
-        url : url,
-        success: function(data) {
-            selectedForm.prepend(templates.alert_box( {type: 'success', message: data} ));
-            ClearIssueBook();
-            $('#issue_student_id').focus();
-        },
-        error: function(xhr, status, error){
-
-            console.log(xhr);
-
-            var err = jQuery.parseJSON(xhr.responseText).error;
-            selectedForm.prepend(templates.alert_box( {type: 'danger', message: err.message} ));
-        },
-        beforeSend: function() {
-            selectedForm.css({'opacity' : '0.4'});
-        },
-        complete: function() {
-            selectedForm.css({'opacity' : '1.0'});
-        }
-    });
-}
-
 function returnBook(bookID, selectedForm){
     var url =  '/issue-log/' + bookID + '/edit';
     $.ajax({
@@ -103,13 +67,12 @@ function ClearIssueBook(){
 $(document).ready(function(){
     $(document).on("click","#issuebook",function(){
         var selectedForm = $(this).parents('form'),
-            studentID = selectedForm.find("input[data-form-field~=student-issue-id]").val(),
-            bookID = selectedForm.find("input[data-form-field~=book-issue-id]").val();
+            bookStudentId = selectedForm.find("#book_student").val();
         
-        if(studentID == "" || bookID == ""){
+        if(bookStudentId == ""){
             selectedForm.prepend(templates.alert_box( {type: 'danger', message: "Invalid Data"} ));
         } else {
-            issueBook(bookID, studentID, selectedForm);
+            issueBook(bookStudentId, selectedForm);
         }
     });
 

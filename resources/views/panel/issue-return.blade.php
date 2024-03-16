@@ -10,24 +10,23 @@
             <h3>Phát hành một cuốn sách mới</h3>
         </div>
         <div class="module-body">
-            <form class="form-horizontal row-fluid">
+            <form class="form-horizontal row-fluid" action="{{ route('issue-log.store') }}" method="POST">
+                @csrf
                 <div class="control-group">
-                    <label class="control-label"> ID Sinh viên</label>
+                    <label class="control-label" for="basicinput">Chọn mẫu đã duyệt</label>
                     <div class="controls">
-                        <input type="number" id="issue_student_id" data-form-field="student-issue-id" placeholder="Nhập id sinh viên " class="span8">
+                        <select tabindex="1" name="book_student_id" class="span8">
+                            <option value="">Chọn mẫu</option>
+                            @foreach($approvedBooks as $approvedBook)
+                                <option value="{{ $approvedBook->id }}">{{ $approvedBook->book->title }} - {{ $approvedBook->student->full_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label">ID sách</label>
                     <div class="controls">
-                        <input type="number" id="issue_book_id" data-form-field="book-issue-id" placeholder="Nhập id sách" class="span8">
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <button type="button" class="btn btn-inverse" id="issuebook">Sách phát hành</button>
+                        <button type="submit" class="btn btn-inverse">Sách phát hành</button>
                     </div>
                 </div>
             </form>
@@ -36,14 +35,19 @@
 
     <div class="module">
         <div class="module-head">
-            <h3>Trả lại một cuốn sách</h3>
+            <h3>Trả lại sách đã phát hành</h3>
         </div>
         <div class="module-body">
             <form class="form-horizontal row-fluid">
                 <div class="control-group">
-                    <label class="control-label"> ID Sách</label>
+                    <label class="control-label" for="basicinput">Chọn sách đã phát hành</label>
                     <div class="controls">
-                        <input type="number" id="return_book_id" data-form-field="book-issue-id" placeholder="Nhập id sách" class="span8">
+                        <select tabindex="1" id="book_student" class="span8">
+                            <option value="">Chọn sách</option>
+                            @foreach($borrowedBooks as $borrowedBook)
+                                <option value="{{ $borrowedBook->id }}">{{ $borrowedBook->book->title }} - {{ $borrowedBook->student->full_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
 

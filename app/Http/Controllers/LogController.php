@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Logs;
 use App\Models\Books;
+use App\Models\BookStudent;
 use App\Models\Issue;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Models\StudentCategories;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class LogController extends Controller
 {
@@ -60,76 +62,32 @@ class LogController extends Controller
 
 	public function store(Request $request)
 	{
-		$data = $request->all()['data'];
-		$bookID = $data['bookID'];
-		$studentID = $data['studentID'];
-		
-		$student = Student::find($studentID);
-		
-		if($student == NULL){
-			return "Invalid Student ID";
-		} else {
-			$approved = $student->approved;
-			
-			if($approved == 0){
+		DB::beginTransaction();
+        try {
+			$bookStudentId = $request->book_student_id;
+			$bookStudent = BookStudent::find($bookStudentId);
+            $bookStudent->update([
+				'status' => BookStudent::STATUS_BORROWED,
+				'expired_time' => Carbon::now()->addDays(15)
+			]);
 
-				return "Student still not approved by Admin Librarian";
-				// throw new Exception('');
-			} else {
-				$books_issued = $student->books_issued;
-				$category = $student->category;
-				
-				$max_allowed = StudentCategories::where('cat_id', '=', $category)->firstOrFail()->max_allowed;
+			$data = [
+				'book_student_id' => $bookStudent->id,
+				'issue_by' => Auth::id()
+			];
+            Logs::create($data);
+            DB::commit();
 
-				if($books_issued >= $max_allowed){
+			return redirect()->route('issue-return')->with(['global' => 'Phát hành sách thành công']);
+        } catch (Exception $e) {
+            Log::error("LogController@store:bookStudentId-$bookStudentId " . $e->getMessage());
+            DB::rollBack();
 
-					return 'Student cannot issue any more books';
-				} else {
-
-					$book = Issue::where('book_id', $bookID)->where('available_status', '!=', 0)->first();
-
-					if($book == NULL){
-
-						return 'Invalid Book Issue ID';
-
-					} else {
-
-						$book_availability = $book->available_status;
-						// dd($book);
-						if($book_availability != 1){
-							return 'Book not available for issue';
-						} else {
-
-							// book is to be issued
-							DB::transaction( function() use($bookID, $studentID) {
-								$log = new Logs;
-
-								$log->book_issue_id = $bookID;
-								$log->student_id	= $studentID;
-								$log->issue_by		= Auth::id();
-								$log->issued_at		= date('Y-m-d H:i');
-								$log->return_time	= 0;
-
-								$log->save();
-
-								$book = Issue::where('book_id', $bookID)->where('available_status', '!=', 0)->first();
-								// changing the availability status
-								$book_issue_update = Issue::where('book_id', $bookID)->where('issue_id', $book->issue_id)->first();
-								$book_issue_update->available_status = 0;
-								$book_issue_update->save();
-
-								// increasing number of books issed by student
-								$student = Student::find($studentID);
-								$student->books_issued = $student->books_issued + 1;
-								$student->save();
-							});
-
-							return 'Book Issued Successfully!';
-						}
-					}
-				}
-			}
-		}
+			return redirect()->route('issue-return')->with([
+				'alert' => 'alert-error',
+				'global' => 'Đã có lỗi xảy ra, vui lòng thử lại sau!'
+			]);
+        }
 	}
 
 	public function show($id)
@@ -198,7 +156,16 @@ class LogController extends Controller
         return view('panel.logs');
     }
 
-    public function renderIssueReturn() {
-        return view('panel.issue-return');
+    public function renderIssueReturn()
+	{
+		$bookStudents = BookStudent::whereIn('status', [BookStudent::STATUS_APPROVED, BookStudent::STATUS_BORROWED])
+			->with('book', 'student')->get();
+		$approvedBooks = $bookStudents->where('status', BookStudent::STATUS_APPROVED);
+		$borrowedBooks = $bookStudents->where('status', BookStudent::STATUS_BORROWED);
+		
+        return view('panel.issue-return', [
+            'approvedBooks' => $approvedBooks,
+			'borrowedBooks' => $borrowedBooks
+        ]);
     }
 }

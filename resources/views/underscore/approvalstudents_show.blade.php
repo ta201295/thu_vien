@@ -5,6 +5,7 @@
 	<td><%= obj.number %></td>
 	<td><%= obj.book.title %></td>
 	<td><%= obj.book.book_category.category %></td>
+	<td><%= obj.type %></td>
 	<td>
 		<a class="btn btn-success student-status" data-status="1">Approve</a>
 		<a class="btn btn-danger student-status" data-status="2">Reject</a>

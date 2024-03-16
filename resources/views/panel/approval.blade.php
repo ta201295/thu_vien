@@ -28,6 +28,7 @@
                         <th>Số lượng</th>
                         <th>Tên sách</th>
                         <th>Danh mục</th>
+                        <th>Loại</th>
                         <th>Chấp thuận</th>
                     </tr>
                 </thead>

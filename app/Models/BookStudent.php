@@ -33,6 +33,11 @@ class BookStudent extends Model
 		self::STATUS_EXTEND => 'Xin gia hạn',
 	];
 
+	const STATUS_TEXT_ADMIN = [
+		self::STATUS_PENDING => 'Mượn mới',
+		self::STATUS_EXTEND => 'Xin gia hạn',
+	];
+
 	const STATUS_CLASS = [
 		self::STATUS_PENDING => 'blue',
 		self::STATUS_APPROVED => 'green',

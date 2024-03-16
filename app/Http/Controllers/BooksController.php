@@ -85,8 +85,8 @@ class BooksController extends Controller
 	 */
 	public function show($string)
 	{
-		$book_list = Books::select('book_id','title','author','description','book_categories.category')
-		->join('book_categories', 'book_categories.id', '=', 'books.category_id')
+		$book_list = Books::select('book_id','title','author','description','book_categories.category', 'total_active')
+			->join('book_categories', 'book_categories.id', '=', 'books.category_id')
 			->where('title', 'like', '%' . $string . '%')
 			->orWhere('author', 'like', '%' . $string . '%')
 			->orderBy('book_id');

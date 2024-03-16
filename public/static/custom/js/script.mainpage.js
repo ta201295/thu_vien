@@ -17,11 +17,12 @@ function loadSearchedBooks(string){
                 table.html('');
                 for(var books in data) {
                     book = data[books];
-                    console.log(book.avaliability);
-                    if(book.avaliability){
-                        book.avaliability = '<a class="btn btn-success">Available</a>';
+                    console.log(book);
+
+                    if(book.total_active > 0){
+                        book.avaliability = '<a class="btn btn-success">Còn sách</a>';
                     } else {
-                        book.avaliability = '<a class="btn btn-danger">Not Available</a>';
+                        book.avaliability = '<a class="btn btn-danger">Hết sách</a>';
                     }
                     
                     table.append(default_tpl(book));

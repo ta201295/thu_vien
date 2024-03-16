@@ -21,13 +21,15 @@
 						<tr>
 							<td>{{ $bookStudent->book->title }}</td>
 							<td>{{ $bookStudent->number }}</td>
-							<td style="color: {{ App\Models\BookStudent::STATUS_CLASS[$bookStudent->status] }}">{{ App\Models\BookStudent::STATUS_TEXT[$bookStudent->status]}}</td>
 							@if ($bookStudent->status == App\Models\BookStudent::STATUS_BORROWED && Carbon\Carbon::now()->gt($bookStudent->expired_time))
+								<td style="color: orange">Quá hạn trả sách</td>
 								<td style="color:red">
-									{{ $bookStudent->expired_time }}<form action="{{route('book-student.extend', ['bookStudent' => $bookStudent->id])}}"
-										><button type="submit" style="background-color: #3cbc8d">Gia Hạn</button></form>
+									<form action="{{route('book-student.extend', ['bookStudent' => $bookStudent->id])}}">
+										{{ $bookStudent->expired_time }} <button type="submit" style="background-color: #3cbc8d">Gia Hạn</button>
+									</form>
 								</td>
 							@else
+								<td style="color: {{ App\Models\BookStudent::STATUS_CLASS[$bookStudent->status] }}">{{ App\Models\BookStudent::STATUS_TEXT[$bookStudent->status]}}</td>
 								<td>{{ $bookStudent->expired_time }}</td>
 							@endif
 						</tr>

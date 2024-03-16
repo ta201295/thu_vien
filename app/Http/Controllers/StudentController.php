@@ -14,6 +14,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Requests\Student\LoginRequest;
 use App\Http\Requests\Student\StoreRequest;
 use App\Models\BookCategories;
+use App\Models\BookStudent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -125,53 +126,15 @@ class StudentController extends Controller
 	public function show($id)
 	{
 		$student = Student::find($id);
+
 		if($student == NULL){
 			throw new Exception('Invalid Student ID');
 		}
 
-		$student->year = (int)substr($student->year, 2, 4);
-
-		$student_category = StudentCategories::find($student->category);
-		$student->category = $student_category->category;
-
-		$student_branch = Branch::find($student->branch);
-		$student->branch = $student_branch->branch;
-
-
-		if($student->rejected == 1){
-			unset($student->approved);
-			unset($student->books_issued);
-			$student->rejected = (bool)$student->rejected;
-
-			return $student;
-		}
-
-		if($student->approved == 0){
-			unset($student->rejected);
-			unset($student->books_issued);
-			$student->approved = (bool)$student->approved;
-
-			return $student;
-		}
-
-		unset($student->rejected);
-		unset($student->approved);
-
-		$student_issued_books = Logs::select('book_issue_id', 'issued_at')
-			->where('student_id', '=', $id)
-			->orderBy('created_at', 'desc')
-			->take($student->books_issued)
-			->get();
-
-		foreach($student_issued_books as $issued_book){
-			$issue = Issue::find($issued_book->book_issue_id);
-			$book = Books::find($issue->book_id);
-			$issued_book->name = $book->title;
-
-			$issued_book->issued_at = date('d-M', strtotime( $issued_book->issued_at));
-		}
-
-		$student->issued_books = $student_issued_books;
+		$booksIssued = BookStudent::where('student_id', $student->id)
+			->whereIn('status', [BookStudent::STATUS_BORROWED, BookStudent::STATUS_EXTEND])
+			->sum('number');
+		$student->books_issued = $booksIssued;
 
 		return $student;
 	}

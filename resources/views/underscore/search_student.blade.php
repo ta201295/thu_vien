@@ -20,29 +20,18 @@
     }
 %>
     <dt>Student ID</dt>
-    <dd><%= obj.student_id %></dd>
+    <dd><%= obj.id %></dd>
     <dt>Name of Student</dt>
     <dd><%= obj.first_name %> <%= obj.last_name %></dd>
-    <dt>Student Category</dt>
-    <dd><%= obj.category %></dd>
-    <dt>Email ID</dt>
-    <dd><%= obj.email_id %></dd>
-    <dt>Roll Number</dt>
-    <dd><%= obj.roll_num %>/<%= obj.branch %>/<%= obj.year %></dd>
-
-    <%
-        if(!flag){
-    %>
-        <dt>Number of Books Issued</dt>
-        <dd><%= obj.books_issued %></dd>
-    <%
-        }
-    %>
+    <dt>Email</dt>
+    <dd><%= obj.email %></dd>
+    <dt>Number of Books Issued</dt>
+    <dd><%= obj.books_issued %></dd>
 </dl>
 
 <%
     if(!flag){
-        if(obj.issued_books.length > 0){
+        if(obj.issued_books){
 %>
 
 <div class="" style="background:#00cc00; color:#fff"><center>Issued Books' Details</center></div>

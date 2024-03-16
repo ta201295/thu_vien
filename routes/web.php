@@ -154,6 +154,7 @@ Route::group(['middleware' => ['auth']] , function() {
 
 	Route::get('/book-student/pending', 'BookStudentController@listPending')->name('book-student.pending');
 	Route::resource('book-student', 'BookStudentController')->only('update');
+	Route::resource('students', 'StudentController')->only(['show']);
 });
 
 Route::resource('students', 'StudentController')->only(['create', 'store']);

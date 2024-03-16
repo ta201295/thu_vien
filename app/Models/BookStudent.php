@@ -42,7 +42,7 @@ class BookStudent extends Model
 		self::STATUS_PENDING => 'blue',
 		self::STATUS_APPROVED => 'green',
 		self::STATUS_REJECTED => 'red',
-		self::STATUS_BORROWED => 'orange',
+		self::STATUS_BORROWED => 'aqua',
 		self::STATUS_COMPLETED => '',
 		self::STATUS_EXTEND => 'blue',
 	];

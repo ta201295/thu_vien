@@ -63,7 +63,7 @@ function loadIssue(issueID, module_box){
 }
 
 function loadStudent(studentID, module_box){
-    var url =  "/student/" + studentID;
+    var url =  "/students/" + studentID;
 
     var default_tpl = _.template($('#search_student').html());
 

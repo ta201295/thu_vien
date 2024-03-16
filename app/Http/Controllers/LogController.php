@@ -177,6 +177,10 @@ class LogController extends Controller
 			$bookStudent = BookStudent::find($bookStudentId);
             $bookStudent->update(['status' => BookStudent::STATUS_COMPLETED]);
 
+			$book = Books::find($bookStudent->book_id);
+			$totalActive = $book->total_active + $bookStudent->number;
+            $book->update(['total_active' => $totalActive]);
+
             Logs::where('book_student_id', $bookStudent->id)->update(['return_time' => now()]);
             DB::commit();
 

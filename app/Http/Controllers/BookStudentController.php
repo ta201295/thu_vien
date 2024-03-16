@@ -59,6 +59,10 @@ class BookStudentController extends Controller
             return redirect()->back()->withErrors(['book_id' => 'Sách không tồn tại']);
         }
 
+        if ($data['number'] > $book->total_active) {
+            return redirect()->back()->withErrors(['number' => "Còn $book->total_active có thể mượn"]);
+        }
+
         $data['category_id'] = $book->category_id;
         $data['student_id'] = auth('student')->user()->id;
 

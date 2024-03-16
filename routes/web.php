@@ -168,4 +168,5 @@ Route::group(['middleware' => ['auth:student']], function () {
 	});
 
 	Route::resource('book-student', 'BookStudentController')->except('update');
+	Route::get('/book-student/{bookStudent}/extend', 'BookStudentController@extend')->name('book-student.extend');
 });

@@ -22,6 +22,7 @@ class BookStudent extends Model
     const STATUS_REJECTED = 2;
 	const STATUS_BORROWED = 3;
 	const STATUS_COMPLETED = 4;
+	const STATUS_EXTEND = 5;
 
 	const STATUS_TEXT = [
 		self::STATUS_PENDING => 'Chờ xử lý',
@@ -29,14 +30,16 @@ class BookStudent extends Model
 		self::STATUS_REJECTED => 'Bị từ chối',
 		self::STATUS_BORROWED => 'Đã mượn',
 		self::STATUS_COMPLETED => 'Đã trả',
+		self::STATUS_EXTEND => 'Xin gia hạn',
 	];
 
 	const STATUS_CLASS = [
-		self::STATUS_PENDING => '',
+		self::STATUS_PENDING => 'blue',
 		self::STATUS_APPROVED => 'green',
 		self::STATUS_REJECTED => 'red',
 		self::STATUS_BORROWED => 'orange',
-		self::STATUS_COMPLETED => 'blue',
+		self::STATUS_COMPLETED => '',
+		self::STATUS_EXTEND => 'blue',
 	];
 
 	public function book()

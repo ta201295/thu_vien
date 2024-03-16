@@ -151,4 +151,18 @@ class BookStudentController extends Controller
 
         return $query->get();
     }
+
+    public function extend(BookStudent $bookStudent)
+    {
+        if ($bookStudent->student_id != auth('student')->user()->id) {
+            return redirect()->back()->with([
+                'alert' => 'alert-error',
+                'global' => 'Bạn không có quyền'
+            ]);
+        }
+
+        $bookStudent->update(['status' => BookStudent::STATUS_EXTEND]);
+
+        return redirect()->back()->with(['global' => 'Đang chờ phê duyệt']);
+    }
 }

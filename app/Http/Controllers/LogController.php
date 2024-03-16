@@ -158,10 +158,10 @@ class LogController extends Controller
 
     public function renderIssueReturn()
 	{
-		$bookStudents = BookStudent::whereIn('status', [BookStudent::STATUS_APPROVED, BookStudent::STATUS_BORROWED])
+		$bookStudents = BookStudent::whereIn('status', [BookStudent::STATUS_APPROVED, BookStudent::STATUS_BORROWED, BookStudent::STATUS_EXTEND])
 			->with('book', 'student')->get();
 		$approvedBooks = $bookStudents->where('status', BookStudent::STATUS_APPROVED);
-		$borrowedBooks = $bookStudents->where('status', BookStudent::STATUS_BORROWED);
+		$borrowedBooks = $bookStudents->where('status', [BookStudent::STATUS_BORROWED, BookStudent::STATUS_EXTEND]);
 		
         return view('panel.issue-return', [
             'approvedBooks' => $approvedBooks,

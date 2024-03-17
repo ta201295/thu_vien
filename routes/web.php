@@ -154,19 +154,17 @@ Route::group(['middleware' => ['auth']] , function() {
 
 	Route::get('/book-student/pending', 'BookStudentController@listPending')->name('book-student.pending');
 	Route::resource('book-student', 'BookStudentController')->only('update');
-	Route::resource('students', 'StudentController')->only(['show']);
+	Route::resource('students', 'StudentController');
 });
 
-Route::resource('students', 'StudentController')->only(['create', 'store']);
+Route::resource('students', 'StudentController')->except(['show']);
 Route::prefix('students')->group(function () {
 	Route::post('/login', 'StudentController@login')->name('students.post_login');
 });
 
 
 Route::group(['middleware' => ['auth:student']], function () {
-	Route::prefix('students')->group(function () {
-		Route::get('/logout', 'StudentController@logout')->name('students.logout');
-	});
+	Route::get('student/logout', 'StudentController@logout')->name('students.logout');
 
 	Route::resource('book-student', 'BookStudentController')->except('update');
 	Route::get('/book-student/{bookStudent}/extend', 'BookStudentController@extend')->name('book-student.extend');

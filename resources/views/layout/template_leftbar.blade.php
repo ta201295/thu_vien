@@ -11,11 +11,11 @@
                     <i class="menu-icon icon-filter" style="color: white;"></i> Tất cả sinh viên đang chờ đợi
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ URL::route('registered-students') }}">
                     <i class="menu-icon icon-group" style="color: white;"></i>Tất cả sinh viên được phê duyệt
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ URL::route('all-books') }}">
                     <i class="menu-icon icon-th-list" style="color: white;"></i>Tất cả sách trong thư viện
@@ -31,11 +31,11 @@
                     <i class="menu-icon icon-folder-open-alt" style="color: white;"></i>Thêm sách
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ URL::route('settings') }}">
                     <i class="menu-icon icon-cog" style="color: white;"></i>Thêm cài đặt
                 </a>
-            </li>
+            </li> --}}
 
             <li>
                 <a href="{{ URL::route('issue-return') }}">

@@ -15,6 +15,9 @@ class HomeController extends Controller
 {
 
     public $categories_list = array();
+    public $branch_list = [];
+    public $student_categories_list = [];
+
     public function __construct() {
         $this->categories_list = Categories::select()->orderBy('category')->get();
     }

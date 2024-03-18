@@ -89,21 +89,7 @@ class BooksController extends Controller
 			->join('book_categories', 'book_categories.id', '=', 'books.category_id')
 			->where('title', 'like', '%' . $string . '%')
 			->orWhere('author', 'like', '%' . $string . '%')
-			->orderBy('book_id');
-
-		$book_list = $book_list->get();
-
-		foreach($book_list as $book){
-			$conditions = array(
-				'book_id'			=> $book->book_id,
-				'available_status'	=> 1
-			);
-
-			$count = Issue::where($conditions)
-				->count();
-
-			$book->avaliability = ($count > 0) ? true : false;
-		}
+			->orderBy('book_id')->get();
 
         return $book_list;
 	}

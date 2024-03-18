@@ -15,10 +15,10 @@
                 <b>Tìm sách</b>
             </button>
 
-            <button class="btn-box big span4 homepage-form-box" id="findissuebox">
+            {{-- <button class="btn-box big span4 homepage-form-box" id="findissuebox">
                 <i class="icon-book"></i>
                 <b>Tìm sách phát hành </b>
-            </button>
+            </button> --}}
 
             <button class="btn-box big span4 homepage-form-box" id="findstudentbox">
                 <i class="icon-user"></i>

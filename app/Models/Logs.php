@@ -13,4 +13,9 @@ class Logs extends Model
 
 	protected $hidden = array();
 
+	public function bookStudent()
+    {
+        return $this->hasOne(BookStudent::class, 'id', 'book_student_id');
+    }
+
 }

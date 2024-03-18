@@ -18,39 +18,8 @@ class LogController extends Controller
 {
     public function index()
 	{
-
-		$logs = Logs::select('id','book_issue_id','student_id','issued_at')
-			->where('return_time', '=', 0)
-			->orderBy('issued_at', 'DESC');
-
-			// dd($logs);
-		
-		$logs = $logs->get();
-
-		for($i=0; $i<count($logs); $i++){
-	        
-	        $issue_id = $logs[$i]['book_issue_id'];
-	        $student_id = $logs[$i]['student_id'];
-	        
-	        // to get the name of the book from book issue id
-	        $issue = Issue::find($issue_id);
-	        $book_id = $issue->book_id;
-	        $book = Books::find($book_id);
-			$logs[$i]['book_name'] = $book->title;
-
-			// to get the name of the student from student id
-			$student = Student::find($student_id);
-			$logs[$i]['student_name'] = $student->first_name . ' ' . $student->last_name;
-
-			// change issue date and return date in human readable format
-			$logs[$i]['issued_at'] = date('d-M', strtotime($logs[$i]['issued_at']));
-			if ($issue->return_time == 0) {
-				$logs[$i]['return_time'] =  '<p class="color:red">Pending</p>';
-			}else {
-				$logs[$i]['return_time'] = date('d-M', strtotime($logs[$i]['return_time']));
-			}
-
-		}
+		$logs = Logs::with('bookStudent.book', 'bookStudent.student')
+			->orderBy('created_at', 'DESC')->get();
 
         return $logs;
 	}

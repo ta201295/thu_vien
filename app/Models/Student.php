@@ -15,6 +15,8 @@ class Student extends Authenticatable
 		'status'
 	];
 
+	protected $appends = ['full_name'];
+
 	public function getFullNameAttribute()
     {
         return "{$this->last_name} {$this->first_name}";;

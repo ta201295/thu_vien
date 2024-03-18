@@ -18,11 +18,13 @@ class CreateBooksTable extends Migration
             $table->string('title', 1000);
             $table->string('author', 1000);
             $table->text('description');
-            $table->integer('category_id')->unsigned();
-            $table->integer('added_by')->unsigned();
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('added_by');
             $table->unsignedSmallInteger('total');
             $table->unsignedSmallInteger('total_active');
             $table->timestamps();
+            $table->foreign('category_id')->references('id')->on('book_categories');
+            $table->foreign('added_by')->references('id')->on('users');
         });
     }
 

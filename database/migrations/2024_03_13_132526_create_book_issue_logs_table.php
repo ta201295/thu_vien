@@ -15,10 +15,12 @@ class CreateBookIssueLogsTable extends Migration
     {
         Schema::create('book_issue_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('book_student_id')->unsigned();
-            $table->integer('issue_by')->unsigned();
+            $table->unsignedBigInteger('book_student_id');
+            $table->unsignedBigInteger('issue_by');
             $table->timestamp('return_time')->nullable();
             $table->timestamps();
+            $table->foreign('book_student_id')->references('id')->on('book_student');
+            $table->foreign('issue_by')->references('id')->on('users');
         });
     }
 

@@ -22,6 +22,8 @@ class CreateBookStudentTable extends Migration
             $table->tinyInteger('status')->default(0)->comment('0:pending, 1:approved, 2:rejected, 3:borrowed, 4:completed');
             $table->date('expired_time')->nullable();
             $table->timestamps();
+            $table->foreign('book_id')->references('book_id')->on('books');
+            $table->foreign('student_id')->references('id')->on('students');
         });
     }
 
